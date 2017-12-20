@@ -1,5 +1,5 @@
 function char_load()
-  char = {x = 0, y = 0, w = 24, h = 32, xV = 0, yV = 0, dir = 1, jump = false, shield = false, swordtime = 0, weapon = 1, hp = 10, invtime = 0, dead = false}
+  char = {x = 0, y = 32, w = 24, h = 32, xV = 0, yV = 0, dir = 1, jump = false, shield = false, swordtime = 0, weapon = 1, hp = 10, invtime = 0, dead = false}
 end
 
 function char_update(dt)
@@ -29,6 +29,9 @@ function char_update(dt)
   if love.keyboard.isDown("z") and char.swordtime <= -attackDelay then
     char.swordtime = weapons[char.weapon].spd
     char.shield = false
+    if weapons[char.weapon].type == 2 then
+      newProjectile(char.x+char.w*(char.dir+1)/2, char.y+char.h/2, weapons[char.weapon].dmg*char.dir, 0, 1, 1)
+    end
   elseif char.swordtime > -attackDelay then
     char.swordtime = char.swordtime - dt
   end

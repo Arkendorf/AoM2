@@ -1,7 +1,7 @@
 function combat_load()
   weapons = {
-    {w = 16, h = 4, dmg = 1, spd = .3, drop = true, icon = 1, img = 1},
-    {w = 12, h = 4, dmg = 1, spd = 1, drop = true, icon = 2, img = 2}
+    {w = 16, h = 4, dmg = 1, spd = .3, drop = true, type = 2, icon = 1, img = 1},
+    {w = 12, h = 4, dmg = 1, spd = 1, drop = true, type = 1, icon = 2, img = 2}
   }
   weaponDrops = {}
   attackDelay = 0.1
@@ -17,7 +17,7 @@ function combat_update(dt)
         v.invtime = v.invtime - dt
       end
 
-      if v.swordtime > 0 and aabb(char, getWeaponHitbox(v)) and char.invtime <= 0 then
+      if weapons[v.weapon].type == 1 and v.swordtime > 0 and aabb(char, getWeaponHitbox(v)) and char.invtime <= 0 then
         if char.shield == false or char.dir == v.dir then
           char.hp = char.hp - weapons[v.weapon].dmg
           char.xV =  200 * dt * v.dir
@@ -28,7 +28,7 @@ function combat_update(dt)
         end
       end
 
-      if char.swordtime > 0 and aabb(v, getWeaponHitbox(char)) and v.invtime <= 0 then
+      if weapons[char.weapon].type == 1 and char.swordtime > 0 and aabb(v, getWeaponHitbox(char)) and v.invtime <= 0 then
         if v.shield == false or v.dir == char.dir then
           v.hp = v.hp - weapons[char.weapon].dmg
           v.xV =  200 * dt * char.dir
@@ -59,6 +59,7 @@ function combat_update(dt)
       weaponDrops[i] = nil
     end
   end
+  weaponDrops = removeNil(weaponDrops)
 end
 
 function getWeaponHitbox(v)
@@ -77,6 +78,6 @@ end
 
 function combat_draw()
   for i, v in ipairs(weaponDrops) do
-    love.graphics.draw(weaponImgs[weapons[v.weapon].img], v.x, v.y)
+    love.graphics.draw(weaponImgs[weapons[v.weapon].img], math.floor(v.x), math.floor(v.y))
   end
 end

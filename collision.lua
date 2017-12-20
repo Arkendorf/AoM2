@@ -1,9 +1,10 @@
 function collide(object)
-  --object.jump = false
+  local collision = false
   for i = 0, 1 do
     for j = 0, 1 do
       corner = pointToTile(object.x+object.w*j+object.xV, object.y+object.h*i+object.yV)
       if map[corner.y] and map[corner.y][corner.x] and tile.type[map[corner.y][corner.x]] == 1 then
+        collision = true
         local dif = {math.abs(object.x + object.w - (corner.x-1)*tile.size),
                      math.abs(object.x - corner.x*tile.size),
                      math.abs(object.y + object.h - (corner.y-1)*tile.size),
@@ -17,7 +18,6 @@ function collide(object)
         elseif dif[3] < dif[2] and dif[3] < dif[1] and dif[3] < dif[4] then
           object.y = (corner.y-1)*tile.size - object.h
           object.yV = 0
-          --object.jump = true
         elseif dif[4] < dif[2] and dif[4] < dif[3] and dif[4] < dif[1] then
           object.y = corner.y*tile.size
           object.yV = 0
@@ -25,6 +25,7 @@ function collide(object)
       end
     end
   end
+  return collision
 end
 
 function borders(object)
@@ -44,11 +45,7 @@ function pointToTile(x, y)
 end
 
 function aabb(a, b)
-  if a.x < b.x + b.w and a.x + a.w > b.x and a.y < b.y + b.h and a.h + a.y > b.y then
-    return true
-  else
-    return false
-  end
+  return (a.x < b.x + b.w and a.x + a.w > b.x and a.y < b.y + b.h and a.y + a.h > b.y)
 end
 
 function physics(object, dt)

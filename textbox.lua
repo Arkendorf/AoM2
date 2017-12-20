@@ -6,7 +6,7 @@ end
 function textbox_update(dt)
   if #textboxes > 0 then
     if love.keyboard.isDown("z") then
-      textboxes[1].t = textboxes[1].t + dt * textSpeed * 2
+      textboxes[1].t = textboxes[1].t + dt * textSpeed * 4
     else
       textboxes[1].t = textboxes[1].t + dt * textSpeed
     end

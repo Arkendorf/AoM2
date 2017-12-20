@@ -18,6 +18,8 @@ function graphics_load()
   tile.quad = createSpriteSheet(tile.img, 2, 2, 32, 32)
 
   textboxImg = love.graphics.newImage("textbox.png")
+
+  projectileImgs = loadFolder("projectileImgs")
 end
 
 function drawObject(object, img)

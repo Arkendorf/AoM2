@@ -8,6 +8,7 @@ require("inventory")
 require("graphics")
 require("char")
 require("textbox")
+require("projectile")
 
 function love.load()
   char_load()
@@ -29,6 +30,7 @@ function love.load()
   event_load()
   graphics_load()
   textbox_load()
+  projectile_load()
 
   globalDt = 0
 end
@@ -41,6 +43,7 @@ function love.update(dt)
     combat_update(dt)
     camera_update(dt)
     event_update(dt)
+    projectile_update(dt)
   end
   inventory_update(dt)
   textbox_update(dt)
@@ -56,6 +59,7 @@ function love.draw()
   enemy_draw()
   combat_draw()
   char_draw()
+  projectile_draw()
 
   for i, v in ipairs(map) do
     for j, w in ipairs(v) do
