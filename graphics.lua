@@ -10,6 +10,7 @@ function graphics_load()
   canvas = love.graphics.newCanvas(screen.w, screen.h)
   weaponIcons = loadFolder("weaponIcons")
   weaponImgs = loadFolder("weaponImgs")
+  hiltSize = 6
   profileImgs = loadFolder("profileImgs")
   matthew = loadObjImg("matthew.png")
   guk = loadObjImg("guk.png")
@@ -34,11 +35,11 @@ function drawObject(object, img)
   else
     quad = img.idle
   end
-  love.graphics.draw(img.img, quad, math.floor(object.x)-object.w*(scale.x-1)/2, math.floor(object.y), 0, scale.x, scale.y)
   if object.swordtime > 0 and object.dead == false then
     local hitbox = getWeaponHitbox(object)
-    love.graphics.draw(weaponImgs[weapons[object.weapon].img], math.floor(object.x)+object.w*(scale.x+1)/2, math.floor(hitbox.y), 0, scale.x, scale.y)
+    love.graphics.draw(weaponImgs[weapons[object.weapon].img], math.floor(object.x)+object.w*(scale.x+1)/2-hiltSize*scale.x, math.floor(hitbox.y), 0, scale.x, scale.y)
   end
+  love.graphics.draw(img.img, quad, math.floor(object.x)-object.w*(scale.x-1)/2, math.floor(object.y), 0, scale.x, scale.y)
 end
 
 function loadFolder(folder)
