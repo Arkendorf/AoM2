@@ -1,6 +1,6 @@
 function combat_load()
   weapons = {
-    {w = 16, h = 4, dmg = 1, spd = .3, drop = true, type = 2, icon = 1, img = 1},
+    {w = 16, h = 4, dmg = 1, spd = .3, drop = true, type = 1, icon = 1, img = 1},
     {w = 12, h = 4, dmg = 1, spd = 1, drop = true, type = 1, icon = 2, img = 2}
   }
   weaponDrops = {}

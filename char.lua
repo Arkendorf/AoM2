@@ -3,7 +3,7 @@ function char_load()
 end
 
 function char_update(dt)
-  local speed = 40
+  local speed = 24
   if char.swordtime > 0 then
     speed = 0
   elseif char.shield == true then

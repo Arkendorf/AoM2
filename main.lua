@@ -14,12 +14,12 @@ function love.load()
   char_load()
 
   map = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-         {0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0},
-         {0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0},
-         {0, 0, 0, 3, 0, 3, 0, 0, 0, 3, 3, 2},
-         {2, 0, 3, 2, 2, 2, 2, 2, 2, 2, 2, 1},
-         {1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1}}
-  tile = {type = {[0] = 0, 1, 1, 0}, size = 32}
+         {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+         {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+         {1, 0, 0, 1, 1, 2, 2, 1, 1, 1, 1, 1},
+         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}
+  tile = {type = {[0] = 0, 1, 1, 0, 1, 1, 1, 1}, size = 32}
 
   gravity = 10
 
@@ -64,7 +64,7 @@ function love.draw()
   for i, v in ipairs(map) do
     for j, w in ipairs(v) do
       if w > 0 then
-        love.graphics.draw(tile.img, tile.quad[w], (j-1)*tile.size, (i-1)*tile.size)
+        love.graphics.draw(tileImgs[w], bitmask(j, i), (j-1)*tile.size, (i-1)*tile.size)
       end
     end
   end

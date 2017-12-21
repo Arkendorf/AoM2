@@ -14,12 +14,34 @@ function graphics_load()
   profileImgs = loadFolder("profileImgs")
   matthew = loadObjImg("matthew.png")
   guk = loadObjImg("guk.png")
-  tile.img = love.graphics.newImage("tiles.png")
-  tile.quad = createSpriteSheet(tile.img, 2, 2, 32, 32)
+  tileImgs = loadFolder("tiles")
+  bitmaskQuads = {}
+  for i = 0, 3 do
+    for j = 0, 3 do
+      bitmaskQuads[j*4+i] = love.graphics.newQuad(i*tile.size, j*tile.size, tile.size, tile.size, tile.size*4, tile.size*4)
+    end
+  end
 
   textboxImg = love.graphics.newImage("textbox.png")
 
   projectileImgs = loadFolder("projectileImgs")
+end
+
+function bitmask(tX, tY)
+  local value = 0
+  if tX > 1 and tile.type[map[tY][tX-1]] == 1 then
+    value = value + 2
+  end
+  if tY > 1 and tile.type[map[tY-1][tX]] == 1 then
+    value = value + 1
+  end
+  if tX < #map[1] and tile.type[map[tY][tX+1]] == 1 then
+    value = value + 4
+  end
+  if tY < #map and tile.type[map[tY+1][tX]] == 1 then
+    value = value + 8
+  end
+  return bitmaskQuads[value]
 end
 
 function drawObject(object, img)
