@@ -52,7 +52,7 @@ function physics(object, dt)
   object.yV = object.yV + dt * gravity * 4 -- gravity
 
   collide(object)
-  if isTile(object.x, object.y+object.h+1) or isTile(object.x+object.w, object.y+object.h+1) then -- if tile beneath object, it can jump
+  if isTile(object.x+1, object.y+object.h+1) or isTile(object.x+object.w-1, object.y+object.h+1) then -- if tile beneath object, it can jump
     object.jump = true
   else
     object.jump = false
