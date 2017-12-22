@@ -12,8 +12,6 @@ function graphics_load()
   weaponImgs = loadFolder("weaponImgs")
   hiltSize = 6
   profileImgs = loadFolder("profileImgs")
-  matthew = loadObjImg("matthew.png")
-  guk = loadObjImg("guk.png")
   tileImgs = loadFolder("tiles")
   bitmaskQuads = {}
   for i = 0, 3 do
@@ -21,6 +19,8 @@ function graphics_load()
       bitmaskQuads[j*4+i] = love.graphics.newQuad(i*tile.size, j*tile.size, tile.size, tile.size, tile.size*4, tile.size*4)
     end
   end
+
+  charImgs = loadAnimFolder("chars")
 
   textboxImg = love.graphics.newImage("textbox.png")
 
@@ -44,26 +44,25 @@ function bitmask(tX, tY)
   return bitmaskQuads[value]
 end
 
-function drawObject(object, img)
-  local scale = {y = 1}
-  local quad = nil
-  if object.dir == 1 then
-    scale.x = 1
-  else
-    scale.x = -1
+function loadAnimFolder(folder)
+  imageList = {}
+  i = 1
+  while true do
+    if love.filesystem.isFile(folder.."/"..tostring(i)..".png") == true then
+      imageList[i] = {anim = {}}
+      imageList[i].img = love.graphics.newImage(folder.."/"..tostring(i)..".png")
+      local animInfo = love.filesystem.load(folder.."/"..tostring(i)..".txt")()    
+      for j = 1, #animInfo.length do
+        imageList[i].anim[j] = createSpriteSheet(imageList[i].img, 1, animInfo.length[j], animInfo.frame.x, animInfo.frame.y, (j-1)*animInfo.frame.x)
+      end
+      imageList[i].length = animInfo.length
+      imageList[i].speed = animInfo.speed
+      i = i + 1
+    else
+      break
+    end
   end
-  if object.swordtime > 0 then
-    quad = img.sword
-  elseif object.shield == true then
-    quad = img.shield
-  else
-    quad = img.idle
-  end
-  if object.swordtime > 0 and object.dead == false then
-    local hitbox = getWeaponHitbox(object)
-    love.graphics.draw(weaponImgs[weapons[object.weapon].img], math.floor(object.x)+object.w*(scale.x+1)/2-hiltSize*scale.x, math.floor(hitbox.y), 0, scale.x, scale.y)
-  end
-  love.graphics.draw(img.img, quad, math.floor(object.x)-object.w*(scale.x-1)/2, math.floor(object.y), 0, scale.x, scale.y)
+  return imageList
 end
 
 function loadFolder(folder)
@@ -78,17 +77,6 @@ function loadFolder(folder)
     end
   end
   return imageList
-end
-
-function loadObjImg(img)
-  local object = {}
-  object.img = love.graphics.newImage(img)
-  local w = object.img:getWidth() / 3
-  local h = object.img:getHeight()
-  object.idle = love.graphics.newQuad(0, 0, w, h, object.img:getDimensions())
-  object.shield = love.graphics.newQuad(w, 0, w, h, object.img:getDimensions())
-  object.sword = love.graphics.newQuad(w*2, 0, w, h, object.img:getDimensions())
-  return object
 end
 
 function createSpriteSheet(a, b, c, d, e, f, g) -- image, tiles across, tiles down, tile width, tile height, x offset, y offset

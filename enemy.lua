@@ -2,7 +2,7 @@ require("ai")
 
 function enemy_load()
   enemies = {
-    createEnemy(232, 0, 24, 32, 3, 2, tile.size)
+    createEnemy(232, 0, 24, 32, 3, 2, tile.size, 3)
   }
 end
 
@@ -13,6 +13,7 @@ function enemy_update(dt)
     end
     if v.dead == false and v.active == true then
       ai[1](v, dt)
+      animate(v, dt)
     end
 
     physics(v, dt)
@@ -21,10 +22,10 @@ end
 
 function enemy_draw()
   for i, v in ipairs(enemies) do
-    drawObject(v, guk)
+    drawObject(v, v.img)
   end
 end
 
-function createEnemy(x, y, w, h, hp, weapon, range, vip)
-  return {x = x, y= y, w = w, h = h, hp = hp, weapon = weapon, range = range, xV = 0, yV = 0, dir = 1, swordtime = 0, shield = false, invtime = 0, dead = false, vip = vip, active = false}
+function createEnemy(x, y, w, h, hp, weapon, range, img, vip)
+  return {x = x, y= y, w = w, h = h, hp = hp, weapon = weapon, range = range, xV = 0, yV = 0, dir = 1, swordtime = 0, shield = false, invtime = 0, dead = false, vip = vip, active = false, img = img, anim = 1, frame = 1}
 end

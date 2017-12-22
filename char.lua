@@ -1,5 +1,5 @@
 function char_load()
-  char = {x = 0, y = 32, w = 24, h = 32, xV = 0, yV = 0, dir = 1, jump = false, shield = false, swordtime = 0, weapon = 1, hp = 10, invtime = 0, dead = false}
+  char = {x = 0, y = 32, w = 24, h = 32, xV = 0, yV = 0, dir = 1, jump = false, shield = false, swordtime = 0, weapon = 1, hp = 10, invtime = 0, dead = false, img = 1, anim = 1, frame = 1}
 end
 
 function char_update(dt)
@@ -37,10 +37,12 @@ function char_update(dt)
   end
   physics(char, dt)
   borders(char)
+
+  animate(char, dt)
 end
 
 function char_draw()
-  drawObject(char, matthew)
+  drawObject(char, char.img)
 end
 
 function char_keypressed(key)

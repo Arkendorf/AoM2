@@ -1,6 +1,6 @@
 function event_load()
   events = {
-    {type = 1, x = 96, y = 32, enemies = {createEnemy(200, 0, 24, 32, 3, 2, tile.size, true)}, done = false},
+    {type = 1, x = 96, y = 32, enemies = {createEnemy(200, 0, 24, 32, 3, 2, tile.size, 2, true)}, done = false},
     {type = 2, x = 32, textboxes = {{"test of a textbox event", 1}}, done = false},
   }
   vips = 0

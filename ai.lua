@@ -12,7 +12,7 @@ ai[1] = function(v, dt)
     end
   else
     if v.swordtime <= -attackDelay then
-      v.swordtime = weapons[char.weapon].spd
+      v.swordtime = weapons[v.weapon].spd
       if char.x-v.x > 0 then
         v.dir = 1
       else
