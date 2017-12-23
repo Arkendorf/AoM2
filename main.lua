@@ -9,6 +9,7 @@ require("graphics")
 require("char")
 require("textbox")
 require("projectile")
+require("background")
 
 function love.load()
   char_load()
@@ -53,9 +54,17 @@ end
 function love.draw()
   love.graphics.setCanvas(canvas)
   love.graphics.clear()
+
+  love.graphics.setColor(65, 178, 0)
+  love.graphics.rectangle("fill", 0, 0, screen.w, screen.h/2)
+  love.graphics.setColor(102, 56, 26)
+  love.graphics.rectangle("fill", 0, screen.h/2, screen.w, screen.h/2)
+  love.graphics.setColor(255, 255, 255)
+
+  background_draw()
+
   love.graphics.push()
   love.graphics.translate(math.floor(-camera.x)+screen.w/2, math.floor(-camera.y)+screen.h/2)
-
   enemy_draw()
   combat_draw()
   char_draw()

@@ -1,7 +1,7 @@
 function event_load()
   events = {
-    {type = 1, x = 96, y = 32, enemies = {createEnemy(200, 0, 24, 32, 3, 2, tile.size, 2, true)}, done = false},
-    {type = 2, x = 32, textboxes = {{"test of a textbox event", 1}}, done = false},
+    -- {x = 96, y = 32, enemies = {createEnemy(200, 0, 24, 32, 3, 2, tile.size, 2, true)}, done = false},
+    -- {x = 32, y = 32, textboxes = {{"test of a textbox event", 1}}, done = false},
   }
   vips = 0
   currentEvent = nil
@@ -12,13 +12,14 @@ function event_update(dt)
     if v.done == false and char.x+char.w/2 >= v.x then
       v.done = true
       currentEvent = v
-      if v.type == 1 then
+      if v.enemies then
         lockScreen(v.x, v.y)
         for j, w in ipairs(v.enemies) do
           enemies[#enemies+1] = w
         end
         vips = #v.enemies
-      elseif v.type == 2 then
+      end
+      if v.textboxes then
         setTextboxes(v.textboxes)
       end
     end

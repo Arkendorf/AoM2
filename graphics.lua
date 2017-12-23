@@ -20,6 +20,9 @@ function graphics_load()
     end
   end
 
+  background = {img = love.graphics.newImage("background.png")}
+  background.layers = createSpriteSheet(background.img, 1, 3, 256, 256)
+
   charImgs = loadAnimFolder("chars")
 
   textboxImg = love.graphics.newImage("textbox.png")
@@ -51,7 +54,7 @@ function loadAnimFolder(folder)
     if love.filesystem.isFile(folder.."/"..tostring(i)..".png") == true then
       imageList[i] = {anim = {}}
       imageList[i].img = love.graphics.newImage(folder.."/"..tostring(i)..".png")
-      local animInfo = love.filesystem.load(folder.."/"..tostring(i)..".txt")()    
+      local animInfo = love.filesystem.load(folder.."/"..tostring(i)..".txt")()
       for j = 1, #animInfo.length do
         imageList[i].anim[j] = createSpriteSheet(imageList[i].img, 1, animInfo.length[j], animInfo.frame.x, animInfo.frame.y, (j-1)*animInfo.frame.x)
       end
